@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.yy4kpnv.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.yy4kpnv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(uri, {
@@ -24,11 +24,11 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-  const ordersRoutes = require("./routes/orders")
-  const productsRoutes = require("./routes/products")
+const ordersRoutes = require("./routes/orders");
+const productsRoutes = require("./routes/products");
 
-  app.use('/orders', ordersRoutes);
-  app.use('/products', productsRoutes);
+app.use("/orders", ordersRoutes);
+app.use("/products", productsRoutes);
 
 app.get("/", async (req, res) => {
   res.send("Order app is running");
